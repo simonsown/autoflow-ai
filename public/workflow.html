@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workflow Builder — AutoFlow AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="container">
+  <nav>
+    <div class="nav-brand">Auto<span>Flow</span> AI</div>
+    <div class="nav-links">
+      <a href="/">Trang chủ</a>
+      <a href="/dashboard.html">Dashboard</a>
+      <a href="/workflow.html" class="active">Workflow</a>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <div>
+      <h2 id="wfTitle">Workflow Builder</h2>
+      <div style="font-size:12px;color:var(--text2);margin-top:4px;" id="wfMeta">Kéo thả các hành động để tạo luồng tự động</div>
+    </div>
+    <div class="flex gap-2">
+      <button class="btn btn-secondary" onclick="saveWorkflow()">💾 Lưu</button>
+      <button class="btn btn-primary" onclick="runWorkflow()">▶️ Chạy luồng</button>
+    </div>
+  </div>
+
+  <div class="workflow-editor">
+    <!-- Action Palette -->
+    <div class="action-palette">
+      <h3 style="font-size:12px;margin-bottom:12px;color:var(--text2);">🧩 Hành động</h3>
+      <div class="palette-item" onclick="addAction('ai_process')">
+        <span class="palette-icon">🤖</span>
+        <span class="palette-label">AI Xử lý</span>
+      </div>
+      <div class="palette-item" onclick="addAction('send_email')">
+        <span class="palette-icon">📧</span>
+        <span class="palette-label">Gửi Email</span>
+      </div>
+      <div class="palette-item" onclick="addAction('webhook_call')">
+        <span class="palette-icon">🌐</span>
+        <span class="palette-label">Gọi Webhook</span>
+      </div>
+      <div class="palette-item" onclick="addAction('transform')">
+        <span class="palette-icon">🔄</span>
+        <span class="palette-label">Biến đổi dữ liệu</span>
+      </div>
+      <div class="palette-item" onclick="addAction('condition')">
+        <span class="palette-icon">🔀</span>
+        <span class="palette-label">Điều kiện</span>
+      </div>
+      <div class="palette-item" onclick="addAction('log')">
+        <span class="palette-icon">📝</span>
+        <span class="palette-label">Ghi log</span>
+      </div>
+      <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+        <h3 style="font-size:12px;margin-bottom:8px;color:var(--text2);">🏃 Chạy thử</h3>
+        <textarea id="testPayload" placeholder='{"text":"Nội dung test","task":"general"}' style="width:100%;padding:8px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'DM Mono',monospace;font-size:10px;min-height:60px;resize:vertical;margin-bottom:8px;"></textarea>
+        <button class="btn btn-primary" style="width:100%;" onclick="runWorkflow()">▶️ Chạy</button>
+      </div>
+    </div>
+
+    <!-- Canvas -->
+    <div class="canvas-area" id="canvasArea">
+      <div class="canvas-placeholder" id="canvasPlaceholder">
+        <span style="font-size:36px;">🎯</span>
+        <span>Kéo hành động từ bảng bên trái</span>
+        <span style="font-size:10px;">hoặc click để thêm bước tự động hóa</span>
+      </div>
+      <div id="canvasSteps"></div>
+    </div>
+  </div>
+
+  <!-- Output Panel -->
+  <div class="card mt-6" id="outputPanel" style="display:none;">
+    <div class="flex items-center justify-between mb-4">
+      <h3>📋 Kết quả</h3>
+      <button class="btn btn-secondary" onclick="document.getElementById('outputPanel').style.display='none'">Đóng</button>
+    </div>
+    <div id="outputContent"></div>
+  </div>
+</div>
+
+<script src="/js/workflow.js"></script>
+</body>
+</html>

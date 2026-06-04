@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — AutoFlow AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="container">
+  <nav>
+    <div class="nav-brand">Auto<span>Flow</span> AI</div>
+    <div class="nav-links">
+      <a href="/">Trang chủ</a>
+      <a href="/dashboard.html" class="active">Dashboard</a>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <div>
+      <h2>Dashboard</h2>
+      <div style="font-size:12px;color:var(--text2);margin-top:4px;">Quản lý luồng tự động hóa của bạn</div>
+    </div>
+    <button class="btn btn-primary" onclick="showNewWorkflowModal()">+ Tạo luồng mới</button>
+  </div>
+
+  <div class="grid-4" id="statsGrid">
+    <div class="stat-card card"><span class="stat-num" id="statWorkflows">-</span><span class="stat-label">Tổng luồng</span></div>
+    <div class="stat-card card"><span class="stat-num" id="statActive">-</span><span class="stat-label">Đang hoạt động</span></div>
+    <div class="stat-card card"><span class="stat-num" id="statRuns">-</span><span class="stat-label">Lượt chạy</span></div>
+    <div class="stat-card card"><span class="stat-num" id="statModels">-</span><span class="stat-label">AI Models</span></div>
+  </div>
+
+  <div class="card mt-4">
+    <div class="flex items-center justify-between mb-4">
+      <h3>Luồng tự động</h3>
+      <div class="flex gap-2">
+        <select id="statusFilter" onchange="loadWorkflows()" style="background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:6px 10px;color:var(--text);font-family:'DM Mono',monospace;font-size:11px;">
+          <option value="all">Tất cả</option>
+          <option value="active">Đang hoạt động</option>
+          <option value="paused">Tạm dừng</option>
+        </select>
+      </div>
+    </div>
+    <div class="workflow-list" id="workflowList">
+      <div class="text-center" style="padding:40px;color:var(--text3);font-size:13px;">Đang tải...</div>
+    </div>
+  </div>
+</div>
+
+<!-- NEW WORKFLOW MODAL -->
+<div class="modal-overlay" id="newWorkflowModal">
+  <div class="modal">
+    <h2>Tạo luồng tự động mới</h2>
+    <input type="text" id="wfName" placeholder="Tên luồng (vd: Auto Post Facebook)">
+    <textarea id="wfDesc" placeholder="Mô tả (không bắt buộc)"></textarea>
+    <select id="wfTrigger">
+      <option value="manual">Kích hoạt thủ công</option>
+      <option value="schedule">Theo lịch (Cron)</option>
+      <option value="webhook">Webhook</option>
+    </select>
+    <div id="cronGroup" style="display:none;">
+      <input type="text" id="wfCron" placeholder="Cron expression (vd: 0 9 * * 1 = mỗi sáng thứ 2)">
+      <div style="font-size:10px;color:var(--text2);margin:-8px 0 12px;">
+        Gợi ý: "0 9 * * 1" = 9h sáng thứ 2 · "*/30 * * * *" = mỗi 30 phút
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('newWorkflowModal')">Hủy</button>
+      <button class="btn btn-primary" onclick="createWorkflow()">Tạo luồng</button>
+    </div>
+  </div>
+</div>
+
+<script src="/js/dashboard.js"></script>
+</body>
+</html>
